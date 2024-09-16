@@ -3,7 +3,7 @@ I had determined to use the display system, NHD-7.0-800480FT-CTXL-T
 9/13/2024
 I made more research into NHD-7.0-800480FT-CTXL-T and I had deciede to use C++ for the programming of the display system.
 9/15/2024
-I began reasaerching into the graphics controller to use and have determined the FT800 would be the best.
+I began reasaerching into the graphics controller, FT800, the graphics
 - FT800 communicates with your microcontroller through SPI or I2C
 - example of intialization process:
 class FT800Controller {
@@ -31,6 +31,7 @@ public:
 
 Currently:
 purchasing graphics controller and display system.
+learning how to code a graphics controller(ft800)
 
 
 
