@@ -1,4 +1,4 @@
-Status Report
+Kevin's Status Report
 _
 Things Accomplished:
 Finalized the IDE choice and installed it successfully.
@@ -11,3 +11,18 @@ Finalize on microcontroller and compatabile peripheral parts and purchasing them
 Setbacks:  
 Relative passed away, costing approximately four days of work. 
 Had a trouble installing IDE. Website had a loop of account verification and software installations.
+
+Anthony's Report
+Things Accomplished:
+This week I mainly worked on researching for hardware parts for the console.
+I was able to find the microcontroller of choice to be the STM32 NUCLEO-F103RB and will use STM32Cub as my IDE to embed code into the microcontroller.
+-
+In progress/goals for next week:
+In this coming week I will start writing pseudocode to operate the power system of the pcb
+I have also decided that the sound system of the console will be a piezo buzzer and the controls will be digital buttons that will connect to the GPIO of the NUCLEO microcontroller
+The power supply will be a plug in the wall and the the regulator will be a LDO that will convert the voltage down to 3V. I will work on current regulation this week.
+My main plan this week is to start buying parts and start figuring out which AC/DC converter, LDO, and buttons that we will be using as well as create the logic of coding the microcontroller and PCB design.
+I will also finish a very general flow chart of the hardware. 
+-
+Setbacks: 
+Wifi at my apartment went out for 4 days
