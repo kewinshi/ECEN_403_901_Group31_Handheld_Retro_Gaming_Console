@@ -1,2 +1,8 @@
 Anthony Liu
 Achieved: Found AC/DC Converter, finished box chart
+Kyle Liu
+changing display system to ERM12864-2 to match the specs of stm32
+created clear division between subsystem 2 and 3:
+I will be working on UI controls and elements
+to connect the stm32 to the display system, the communcation command that will be used is the SPI communication method.
+
