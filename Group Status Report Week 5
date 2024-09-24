@@ -1,5 +1,6 @@
 Anthony Liu
 Achieved: Found AC/DC Converter, finished box chart
+Things to do: Farmilarize myself with STM32CubeIDE and Altium
 Kyle Liu
 changing display system to ERM12864-2 to match the specs of stm32
 created clear division between subsystem 2 and 3:
