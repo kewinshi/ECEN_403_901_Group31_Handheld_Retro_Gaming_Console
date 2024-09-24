@@ -6,3 +6,10 @@ created clear division between subsystem 2 and 3:
 I will be working on UI controls and elements
 to connect the stm32 to the display system, the communcation command that will be used is the SPI communication method.
 
+
+
+
+Kevin Shi
+Obtained snake game code in C, built and ran it which works properly inside the terminal. Working on simulating a display to rewrite the logic to fit the parameters of a test video driver and a virtual display.
+Created workspace in STM32IDE. Working on initiating project inside of the workspace.
+
