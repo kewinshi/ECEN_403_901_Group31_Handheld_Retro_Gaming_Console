@@ -21,3 +21,11 @@ Things Accomplished:
    - Coded game logic and pseudo display for first game
    - Working on minimum viable product (MVP) for first game by driving a simulated display
 
+Week 7:
+
+Things accomplished
+   - Finished subsytem introduction project
+   - Started coding breakout logic
+
+Issues Encountered:
+   - Snake file got corrupted somehow. Had to rewrite the code.
