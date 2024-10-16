@@ -3,8 +3,8 @@
 #include <unistd.h>
 #include <termios.h>
 
-#define COLS 27
-#define ROWS 30
+#define COLS 17
+#define ROWS 19
 
 int main() {
   // ANSI escape code to hide cursor
@@ -25,37 +25,137 @@ int main() {
   int quit = 0;
   while (!quit) {
     // Render table
-    printf("▓");
-    for (int i = 0; i < COLS; i++)
-      printf("▓");
-    printf("▓\n");
 
-    for (int j = 0; j < ROWS; j++) {
+    // Top border 
+    for (int i = 0; i < COLS + 2; i++)
       printf("▓");
+    printf("\n");
+
+    // Inside content
+    for (int j = 0; j < ROWS; j++) {
+
+      // Left Border
+      printf("▓");
+
+
       for (int i = 0; i < COLS; i++)
         // drawing dots and walls
-        if ((i % 5) == 0 || (j % 5) == 0) {
-            printf(".");
-            map[j][i] = '.';
-        } else {
-            printf("▓");
-            map[j][i] = '#';
+
+        if (j == 0 && i == 8) {
+          printf("▓");
+          map[j][i] = '#';
+        } 
+        
+        else if (j == 1 && (i == 1 || i == 2 || i == 4 || i == 5 || i == 6 || i == 8 || i == 10 || i == 11 || i == 12 || i == 14 || i == 15)) {
+          printf("▓");
+          map[j][i] = '#';
+        }
+
+        else if (j == 3 && (i == 1 || i == 2 || i == 4 || i == 6 || i == 7 || i == 8 ||i == 9 || i == 10 || i == 12 || i == 14 || i == 15)) {
+          printf("▓");
+          map[j][i] = '#';
+        }
+
+        else if (j == 4 && (i == 4 || i == 8 || i == 12 )) {
+          printf("▓");
+          map[j][i] = '#';
+        }
+
+        else if (j == 5 && (i == 0 || i == 1 || i == 2  || i == 4 || i == 5 || i == 6 || i == 8 || i == 10 || i == 11 || i == 12 || i == 14 || i == 15 || i == 16)) {
+          printf("▓");
+          map[j][i] = '#';
         }
         
+        else if (j == 6 && (i == 0 || i == 1 || i == 2  || i == 4 || i == 12 || i == 14 || i == 15 || i == 16)) {
+          printf("▓");
+          map[j][i] = '#';
+        }
+
+        else if (j == 7 && (i == 0 || i == 1 || i == 2  || i == 4 || i == 6 || i == 7 || i == 9 ||i == 10 || i == 12 || i == 14 || i == 15 || i == 16)) {
+          printf("▓");
+          map[j][i] = '#';
+        }
+
+        else if (j == 8 && (i == 6 || i == 10 )) { // center
+          printf("▓");
+          map[j][i] = '#';
+        }
+
+        else if (j == 9 && (i == 0 || i == 1 || i == 2  || i == 4 || i == 6 || i == 7 || i == 8 || i == 9 ||i == 10 || i == 12 || i == 14 || i == 15 || i == 16)) {
+          printf("▓");
+          map[j][i] = '#';
+        }
+
+        else if (j == 10 && (i == 0 || i == 1 || i == 2  || i == 4 || i == 12 || i == 14 || i == 15 || i == 16)) {
+          printf("▓");
+          map[j][i] = '#';
+        }
+
+        else if (j == 11 && (i == 0 || i == 1 || i == 2  || i == 4 || i == 6 || i ==7 || i == 8 || i == 9 || i == 10 || i == 12 || i == 14 || i == 15 || i == 16)) {
+          printf("▓");
+          map[j][i] = '#';
+        }
+
+        else if (j == 12 && i == 8) {
+          printf("▓");
+          map[j][i] = '#';
+        }
+
+        else if (j == 13 && (i == 1 || i == 2 || i == 4 || i == 5 || i == 6 || i == 8 || i == 10 || i == 11 || i == 12 || i == 14 || i == 15)) {
+          printf("▓");
+          map[j][i] = '#';
+        }
+
+        else if (j == 14 && (i == 2 || i == 14)) {
+          printf("▓");
+          map[j][i] = '#';
+        }
+
+        else if (j == 15 && (i == 0 || i == 2 || i == 4 || i == 6 || i == 7 || i == 8 || i == 10  || i == 12 || i == 14 || i == 16)) {
+          printf("▓");
+          map[j][i] = '#';
+        }
+
+        else if (j == 16 && (i == 4 || i == 12)) {
+          printf("▓");
+          map[j][i] = '#';
+        }
+
+        else if (j == 17 && (i == 1 || i == 2 || i == 3 || i == 4 || i == 5 || i == 6 || i == 8 || i == 10 || i == 11 || i == 12 || i == 13 || i == 14 || i == 15)) {
+          printf("▓");
+          map[j][i] = '#';
+        }
+
+        else {
+          printf(".");
+          map[j][i] = '.';
+        }
+
+        
+        // if ((i % 5) == 0 || (j % 5) == 0) {
+        //     printf(".");
+        //     map[j][i] = '.';
+        // } else {
+        //     printf("▓");
+        //     map[j][i] = '#';
+        // }
+
+
+      // Right border
       printf("▓\n");
     }
 
-    printf("▓");
-    for (int i = 0; i < COLS; i++)
+    // Bottom border
+    for (int i = 0; i < COLS + 2; i++)
       printf("▓");
-    printf("▓\n");
+    printf("\n");
 
     // Move cursor back to top
     printf("\e[%iA", ROWS + 2);
 
     int head = 0, tail = 0;
-    int x = COLS / 2;
-    int y = ROWS / 2;
+    int x = 8;
+    int y = 8;
     int gameover = 0;
     int xdir = 1, ydir = 0;
     int stop = 0;
