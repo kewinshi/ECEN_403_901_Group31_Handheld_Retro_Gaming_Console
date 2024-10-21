@@ -29,3 +29,18 @@ Things accomplished
 
 Issues Encountered:
    - Snake file got corrupted somehow. Had to rewrite the code.
+
+
+
+Week 8: 
+
+Things accomplished:
+   - Compiled and presented bi-weekly progress presentation.
+   - Ordered hardware including displays.
+In progress:
+   - Compiling code in STM32CubeIDE instead of in VSCODE
+   - Getting display connected and driver working with display
+
+Issues encountered:
+   - Dr. Lusher has pointed out that code needs to start being compiled in the microcontroller environment to avoid future compilation headaches.
+   - Parts were not ordered correctly. 
