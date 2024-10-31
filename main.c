@@ -83,7 +83,6 @@ int main(void)
   int apple_y = 1;
   // general variables
   int quit = 0;
-  char key = 'n';
   int game_choice = 0; // snake = 0, pacman = 1, tetris = 2
 
   uart_print("\e[2J");  // Clears the entire screen
