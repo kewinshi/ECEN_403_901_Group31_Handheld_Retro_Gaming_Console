@@ -44,3 +44,17 @@ In progress:
 Issues encountered:
    - Dr. Lusher has pointed out that code needs to start being compiled in the microcontroller environment to avoid future compilation headaches.
    - Parts were not ordered correctly. 
+
+
+Weeky 10:
+
+Things accomplished:
+  - Smoothed out display refresh in PuTTY
+  - Started getting logic connect to physical push buttons
+In progress:
+  - Getting push buttons to work in all four directions
+  - Making Pacman or Tetris
+Issues encountered:
+  - Reading and writing from GPIO pins finnicky.
+  - Input from push buttons are laggy
+  - Can't find the right GPIO pins.
