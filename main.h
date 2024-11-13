@@ -31,7 +31,6 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-char read_keyboard();
 void uart_print(char *str);
 /* USER CODE END Includes */
 

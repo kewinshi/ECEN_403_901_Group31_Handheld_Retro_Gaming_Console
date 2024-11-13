@@ -1,20 +1,20 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2024 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file           : main.c
+ * @brief          : Main program body
+ ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2024 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -22,6 +22,11 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "input.h"
+#include <time.h>
+#include "snake.h"
+#include "pacman.h"
+#include "tetris.h"
 
 //#include "snake.h"
 /* USER CODE END Includes */
@@ -69,26 +74,16 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  // pacman variables
-  char map_pacman[ROWS][COLS];
 
-  // snake variables
-  int x[1000], y[1000];
-  int head = 0, tail = 0;
-  x[head] = COLS / 2;
-  y[head] = ROWS / 2;
+	int curr_input = 1, prev_input = -1;
+	// general variables
+	int game_choice = 0; // snake = 0, pacman = 1, tetris = 2
+	int game_select = 0;
 
-  int xdir = 1, ydir = 0;
-  int apple_x = -1;
-  int apple_y = 1;
-  // general variables
-  int quit = 0;
-  int game_choice = 0; // snake = 0, pacman = 1, tetris = 2
+	uart_print("\e[2J");  // Clears the entire screen
+	uart_print("\e[?25l"); // hide cursor
 
-  uart_print("\e[2J");  // Clears the entire screen
-  uart_print("\e[?25l"); // hide cursor
-
-  srand(time(NULL));
+	srand(time(NULL));
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -111,44 +106,75 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  draw_snake_map(ROWS, COLS);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (quit != 1)
-  {
-    /* USER CODE END WHILE */
+	while (1) {
+		HAL_Delay(50);
+		if (curr_input != -1 && (prev_input != curr_input)) {
 
-    /* USER CODE BEGIN 3 */
-	HAL_Delay(250);
-//	draw_pacman_map(ROWS, COLS, map_pacman);
-    if (game_choice == 0) {
+			for (int i = 0; i < 3; i += 1) { // Try 3 times because it's glitchy
+				uart_print("\e[2J");  // Clears the entire screen
+			}
+			uart_print("\x1b[H"); // Brings cursor to original position
+			uart_print("\e[?25l"); // hide cursor
+
+			uart_print("\rWelcome\r\n\r\n");
+			uart_print("Select game\r\n");
+
+			if (curr_input == 0) {
+				if (game_choice != 0) {
+					game_choice = (game_choice - 1) % 3;
+				}
+				else {
+					game_choice = 3;
+				}
+			}
+			else if (curr_input == 2) {
+				game_choice = (game_choice + 1) % 3;
+			}
+			uart_print("\r\nSnake ");
+			if (game_choice == 0) uart_print("<");
+			uart_print("\r\nPacman ");
+			if (game_choice == 1) uart_print("<");
+			uart_print("\r\nTetris ");
+			if (game_choice == 2) uart_print("<");
+		}
+		get_input(&curr_input, &prev_input, &game_select);
 
 
-    	if (apple_x < 0) {
-    		apple_x = rand() % COLS;
-    		apple_y = rand() % ROWS;
-    	}
-    	draw_apple(ROWS, COLS, x, y, head, tail, &apple_x, &apple_y);
-    	move_snake(ROWS, COLS, x, y, &head, &tail, &apple_x, &apple_y, &xdir, &ydir);
-    }
+		// PLAY SNAKE
+		if (game_choice == 0 && game_select == 1) {
+			play_snake(ROWS, COLS);
+			uart_print("exited snake...");
+			game_select = 0;
+			curr_input = 1;
+			prev_input = -1;
+		}
 
-    if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9) == GPIO_PIN_SET)
-    {
-      ydir = 0;
-      xdir = -1;
-      HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, 1); // test with LED
-    }
-    if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9) == GPIO_PIN_RESET)
-    {
-//      uart_print("pin 9 is LOW");
-      ydir = -1;
-      xdir = 0;
-      HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, 0);
-    }
-    /* USER CODE BEGIN 3 */
-  }
+		// PLAY PACMAN
+		if (game_choice == 1 && game_select == 1) {
+			// pacman logic
+			play_pacman(ROWS, COLS);
+			uart_print("exited pacman...");
+			game_select = 0;
+			curr_input = 1;
+			prev_input = -1;
+
+
+		}
+		// PLAY TETRIS game_choice == 2 && game_select == 1
+		if (game_choice == 2 && game_select == 1) {
+			// TETRIS logic
+			play_tetris();
+			uart_print("exited tetris...");
+			game_select = 0;
+			curr_input = 1;
+			prev_input = -1;
+		}
+	}
   /* USER CODE END 3 */
 }
 
@@ -249,18 +275,20 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : PA4 PA6 PA7 PA8
+                           PA9 PA10 */
+  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8
+                          |GPIO_PIN_9|GPIO_PIN_10;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
   /*Configure GPIO pin : LD2_Pin */
   GPIO_InitStruct.Pin = LD2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PA9 */
-  GPIO_InitStruct.Pin = GPIO_PIN_9;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
@@ -281,12 +309,12 @@ static void MX_GPIO_Init(void)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
-  __disable_irq();
-  while (1)
-  {
-	  uart_print("error occurred \n");
-  }
+	/* User can add his own implementation to report the HAL error return state */
+	__disable_irq();
+	while (1)
+	{
+		uart_print("error occurred \n");
+	}
   /* USER CODE END Error_Handler_Debug */
 }
 
@@ -301,7 +329,7 @@ void Error_Handler(void)
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
+	/* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
 }
