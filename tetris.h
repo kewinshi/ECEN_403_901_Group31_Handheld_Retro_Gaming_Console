@@ -27,5 +27,6 @@ void place_tetrimino(Tetrimino *piece);
 int check_collision(Tetrimino *piece);
 void lock_piece(Tetrimino *piece);
 void clear_lines();
+void print_shape(int shape_index, int rotate_index);
 
 #endif // TETRIS_H

@@ -16,23 +16,25 @@ void play_pacman (int ROWS, int COLS) {
 
 	draw_pacman_map(ROWS, COLS, map_pacman);
 	while (game_select == 1) {
-		get_input(&curr_input, &prev_input, &game_select);
-		// Update movement direction based on input
-		if (curr_input == 0) {  // W key for up
-			xdir = 0;
-			ydir = -1;
-		} else if (curr_input == 1) {  // A key for left
-			xdir = -1;
-			ydir = 0;
-		} else if (curr_input == 2) {  // S key for down
-			xdir = 0;
-			ydir = 1;
-		} else if (curr_input == 3) {  // D key for right
-			xdir = 1;
-			ydir = 0;
+		for (int i = 0; i < 5; i += 1) {
+			get_input(&curr_input, &prev_input, &game_select);
+			// Update movement direction based on input
+			if (curr_input == 0) {  // W key for up
+				xdir = 0;
+				ydir = -1;
+			} else if (curr_input == 1) {  // A key for left
+				xdir = -1;
+				ydir = 0;
+			} else if (curr_input == 2) {  // S key for down
+				xdir = 0;
+				ydir = 1;
+			} else if (curr_input == 3) {  // D key for right
+				xdir = 1;
+				ydir = 0;
+			}
+			HAL_Delay(50);
 		}
-
-		HAL_Delay(250);  // Game speed control
+//		HAL_Delay(250);  // Game speed control
 
 		// Move Pac-Man based on direction and check for walls
 		move_pacman(ROWS, COLS, x, y, &head, &tail, &xdir, &ydir, map_pacman);

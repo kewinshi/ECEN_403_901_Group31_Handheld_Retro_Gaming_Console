@@ -83,7 +83,6 @@ int main(void)
 	uart_print("\e[2J");  // Clears the entire screen
 	uart_print("\e[?25l"); // hide cursor
 
-	srand(time(NULL));
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -169,6 +168,7 @@ int main(void)
 		if (game_choice == 2 && game_select == 1) {
 			// TETRIS logic
 			play_tetris();
+//			print_shape(0,0);
 			uart_print("exited tetris...");
 			game_select = 0;
 			curr_input = 1;
