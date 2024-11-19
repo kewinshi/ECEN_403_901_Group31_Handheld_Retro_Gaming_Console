@@ -1,5 +1,6 @@
 #include "tetris.h"
 #include <stdlib.h>
+#include <time.h>
 
 // Tetris grid
 char tetris_grid[TETRIS_ROWS][TETRIS_COLS] = {0};
@@ -9,145 +10,234 @@ int shapes[7][4][4][4] = {
     // O Tetromino
     {
         // Rotations 0-3 (same for O Tetromino)
-        { { {1, 1},
-            {1, 1} } },
-        { { {1, 1},
-            {1, 1} } },
-        { { {1, 1},
-            {1, 1} } },
-        { { {1, 1},
-            {1, 1} } }
+        {
+            {0, 0, 0, 0},
+            {0, 1, 1, 0},
+            {0, 1, 1, 0},
+            {0, 0, 0, 0}
+        },
+        {
+            {0, 0, 0, 0},
+            {0, 1, 1, 0},
+            {0, 1, 1, 0},
+            {0, 0, 0, 0}
+        },
+        {
+            {0, 0, 0, 0},
+            {0, 1, 1, 0},
+            {0, 1, 1, 0},
+            {0, 0, 0, 0}
+        },
+        {
+            {0, 0, 0, 0},
+            {0, 1, 1, 0},
+            {0, 1, 1, 0},
+            {0, 0, 0, 0}
+        }
     },
     // I Tetromino
     {
         // Rotation 0
-        { { {0, 0, 0, 0},
+        {
+            {0, 0, 0, 0},
             {1, 1, 1, 1},
             {0, 0, 0, 0},
-            {0, 0, 0, 0} } },
+            {0, 0, 0, 0}
+        },
         // Rotation 1
-        { { {0, 0, 1, 0},
+        {
             {0, 0, 1, 0},
             {0, 0, 1, 0},
-            {0, 0, 1, 0} } },
-        // Rotation 2 (same as rotation 0)
-        { { {0, 0, 0, 0},
-            {1, 1, 1, 1},
+            {0, 0, 1, 0},
+            {0, 0, 1, 0}
+        },
+        // Rotation 2
+        {
             {0, 0, 0, 0},
-            {0, 0, 0, 0} } },
-        // Rotation 3 (same as rotation 1)
-        { { {0, 0, 1, 0},
-            {0, 0, 1, 0},
-            {0, 0, 1, 0},
-            {0, 0, 1, 0} } }
+            {0, 0, 0, 0},
+            {1, 1, 1, 1},
+            {0, 0, 0, 0}
+        },
+        // Rotation 3
+        {
+            {0, 1, 0, 0},
+            {0, 1, 0, 0},
+            {0, 1, 0, 0},
+            {0, 1, 0, 0}
+        }
     },
     // T Tetromino
     {
         // Rotation 0
-        { { {0, 1, 0},
-            {1, 1, 1},
-            {0, 0, 0} } },
+        {
+            {0, 0, 0, 0},
+            {0, 1, 0, 0},
+            {1, 1, 1, 0},
+            {0, 0, 0, 0}
+        },
         // Rotation 1
-        { { {0, 1, 0},
-            {0, 1, 1},
-            {0, 1, 0} } },
+        {
+            {0, 0, 1, 0},
+            {0, 1, 1, 0},
+            {0, 0, 1, 0},
+            {0, 0, 0, 0}
+        },
         // Rotation 2
-        { { {0, 0, 0},
-            {1, 1, 1},
-            {0, 1, 0} } },
+        {
+            {0, 0, 0, 0},
+            {1, 1, 1, 0},
+            {0, 1, 0, 0},
+            {0, 0, 0, 0}
+        },
         // Rotation 3
-        { { {0, 1, 0},
-            {1, 1, 0},
-            {0, 1, 0} } }
+        {
+            {0, 1, 0, 0},
+            {1, 1, 0, 0},
+            {0, 1, 0, 0},
+            {0, 0, 0, 0}
+        }
     },
     // S Tetromino
     {
         // Rotation 0
-        { { {0, 1, 1},
-            {1, 1, 0},
-            {0, 0, 0} } },
+        {
+            {0, 0, 0, 0},
+            {0, 1, 1, 0},
+            {1, 1, 0, 0},
+            {0, 0, 0, 0}
+        },
         // Rotation 1
-        { { {0, 1, 0},
-            {0, 1, 1},
-            {0, 0, 1} } },
-        // Rotations 2 and 3 (mirror of rotations 0 and 1)
-        { { {0, 1, 1},
-            {1, 1, 0},
-            {0, 0, 0} } },
-        { { {0, 1, 0},
-            {0, 1, 1},
-            {0, 0, 1} } }
+        {
+            {0, 1, 0, 0},
+            {0, 1, 1, 0},
+            {0, 0, 1, 0},
+            {0, 0, 0, 0}
+        },
+        // Rotation 2
+        {
+            {0, 0, 0, 0},
+            {0, 1, 1, 0},
+            {1, 1, 0, 0},
+            {0, 0, 0, 0}
+        },
+        // Rotation 3
+        {
+            {0, 1, 0, 0},
+            {0, 1, 1, 0},
+            {0, 0, 1, 0},
+            {0, 0, 0, 0}
+        }
     },
     // Z Tetromino
     {
         // Rotation 0
-        { { {1, 1, 0},
-            {0, 1, 1},
-            {0, 0, 0} } },
+        {
+            {0, 0, 0, 0},
+            {1, 1, 0, 0},
+            {0, 1, 1, 0},
+            {0, 0, 0, 0}
+        },
         // Rotation 1
-        { { {0, 0, 1},
-            {0, 1, 1},
-            {0, 1, 0} } },
-        // Rotations 2 and 3 (mirror of rotations 0 and 1)
-        { { {1, 1, 0},
-            {0, 1, 1},
-            {0, 0, 0} } },
-        { { {0, 0, 1},
-            {0, 1, 1},
-            {0, 1, 0} } }
+        {
+            {0, 0, 1, 0},
+            {0, 1, 1, 0},
+            {0, 1, 0, 0},
+            {0, 0, 0, 0}
+        },
+        // Rotation 2
+        {
+            {0, 0, 0, 0},
+            {1, 1, 0, 0},
+            {0, 1, 1, 0},
+            {0, 0, 0, 0}
+        },
+        // Rotation 3
+        {
+            {0, 0, 1, 0},
+            {0, 1, 1, 0},
+            {0, 1, 0, 0},
+            {0, 0, 0, 0}
+        }
     },
     // J Tetromino
     {
         // Rotation 0
-        { { {1, 0, 0},
-            {1, 1, 1},
-            {0, 0, 0} } },
+        {
+            {0, 0, 0, 0},
+            {1, 0, 0, 0},
+            {1, 1, 1, 0},
+            {0, 0, 0, 0}
+        },
         // Rotation 1
-        { { {0, 1, 1},
-            {0, 1, 0},
-            {0, 1, 0} } },
+        {
+            {0, 0, 1, 0},
+            {0, 0, 1, 0},
+            {0, 1, 1, 0},
+            {0, 0, 0, 0}
+        },
         // Rotation 2
-        { { {0, 0, 0},
-            {1, 1, 1},
-            {0, 0, 1} } },
+        {
+            {0, 0, 0, 0},
+            {1, 1, 1, 0},
+            {0, 0, 1, 0},
+            {0, 0, 0, 0}
+        },
         // Rotation 3
-        { { {0, 1, 0},
-            {0, 1, 0},
-            {1, 1, 0} } }
+        {
+            {0, 1, 1, 0},
+            {0, 1, 0, 0},
+            {0, 1, 0, 0},
+            {0, 0, 0, 0}
+        }
     },
     // L Tetromino
     {
         // Rotation 0
-        { { {0, 0, 1},
-            {1, 1, 1},
-            {0, 0, 0} } },
+        {
+            {0, 0, 0, 0},
+            {0, 0, 1, 0},
+            {1, 1, 1, 0},
+            {0, 0, 0, 0}
+        },
         // Rotation 1
-        { { {0, 1, 0},
-            {0, 1, 0},
-            {0, 1, 1} } },
+        {
+            {0, 1, 1, 0},
+            {0, 0, 1, 0},
+            {0, 0, 1, 0},
+            {0, 0, 0, 0}
+        },
         // Rotation 2
-        { { {0, 0, 0},
-            {1, 1, 1},
-            {1, 0, 0} } },
+        {
+            {0, 0, 0, 0},
+            {1, 1, 1, 0},
+            {1, 0, 0, 0},
+            {0, 0, 0, 0}
+        },
         // Rotation 3
-        { { {1, 1, 0},
-            {0, 1, 0},
-            {0, 1, 0} } }
+        {
+            {0, 1, 0, 0},
+            {0, 1, 0, 0},
+            {0, 1, 1, 0},
+            {0, 0, 0, 0}
+        }
     }
 };
 
 
+
+
 void play_tetris() {
+	srand(0);
     uart_print("\x1b[H"); // Reset cursor
     uart_print("\e[2J");  // Clear screen
 
     int game_over = 0;
     int curr_input = -1, prev_input = -1, game_select = 1;
-
-    Tetrimino current_piece = {TETRIS_COLS / 2 - 1, -4, rand() % 7, 0};
+    int piece_select = rand() % 7;
+    Tetrimino current_piece = {TETRIS_COLS / 2 - 1, -4, piece_select, 0};
 
     while (game_select == 1) {
-        HAL_Delay(100); // Adjust delay as needed
+        HAL_Delay(60); // Adjust delay as needed
 
         // Get user input
         get_input(&curr_input, &prev_input, &game_select);
@@ -178,7 +268,10 @@ void play_tetris() {
                 clear_lines();
 
                 // Generate a new piece
-                current_piece = (Tetrimino){TETRIS_COLS / 2 - 1, -4, rand() % 7, 0};
+                piece_select = rand() % 7;
+                uart_int_print(piece_select);
+                uart_print("test");
+                current_piece = (Tetrimino){TETRIS_COLS / 2 - 1, -4, piece_select, 0};
                 if (check_collision(&current_piece)) {
                     game_over = 1;
                     uart_print("Game Over\r\n");
@@ -219,7 +312,7 @@ void draw_tetris_grid(Tetrimino *current_piece) {
             }
 
             if (cell_filled || is_current_piece)
-                uart_print("█");
+                uart_print("o");
             else
                 uart_print(" ");
         }
@@ -323,4 +416,17 @@ void hard_drop(Tetrimino *piece) {
         uart_print("Game Over\r\n");
         // Implement game over handling (e.g., set a flag or exit)
     }
+}
+
+void print_shape(int shape_index, int rotation_index) {
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (shapes[shape_index][rotation_index][i][j])
+                uart_print("o");
+            else
+                uart_print(".");
+        }
+        uart_print("\r\n");
+    }
+    HAL_Delay(1000);
 }

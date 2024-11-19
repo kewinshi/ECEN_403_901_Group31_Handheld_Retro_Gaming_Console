@@ -24,26 +24,27 @@ void play_snake(int ROWS, int COLS) {
 	apple_y = rand() % ROWS;
 	while (game_select == 1)
 	{
-
-		/* USER CODE BEGIN 3 */
-		get_input(&curr_input, &prev_input, &game_select);
-		if (curr_input == 0) { // W
-			xdir = 0;
-			ydir = -1;
+		for (int i = 0; i < 10; i += 1) {
+			/* USER CODE BEGIN 3 */
+			get_input(&curr_input, &prev_input, &game_select);
+			if (curr_input == 0) { // W
+				xdir = 0;
+				ydir = -1;
+			}
+			else if (curr_input == 1) { // A
+				xdir = -1;
+				ydir = 0;
+			}
+			else if (curr_input == 2) { // S
+				xdir = 0;
+				ydir = 1;
+			}
+			else if (curr_input == 3) { // D
+				xdir = 1;
+				ydir = 0;
+			}
+			HAL_Delay(20);
 		}
-		else if (curr_input == 1) { // A
-			xdir = -1;
-			ydir = 0;
-		}
-		else if (curr_input == 2) { // S
-			xdir = 0;
-			ydir = 1;
-		}
-		else if (curr_input == 3) { // D
-			xdir = 1;
-			ydir = 0;
-		}
-		HAL_Delay(250);
 
 		if (apple_x < 0) {
 			apple_x = rand() % COLS;

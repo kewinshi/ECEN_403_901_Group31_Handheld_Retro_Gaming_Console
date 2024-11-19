@@ -8,4 +8,6 @@ extern UART_HandleTypeDef huart2;  // Declare huart2 as an external variable
 
 void uart_print(char *str);
 
+void uart_int_print(int num);
+
 #endif /* KEYBOARD_H */
