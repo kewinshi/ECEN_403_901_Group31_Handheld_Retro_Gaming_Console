@@ -1,1 +1,14 @@
 
+Status Report
+_____________
+
+Week 2
+Things Accomplished:
+  - Researched into display options and routes.
+  - Confirmed decision to use display of larger size but same driver.
+  - 
+In Progress:
+  - Integrating display, display driver code, and the game logic code
+
+Setbacks:
+  - Shaky start with display choice correctness ambiguity.
