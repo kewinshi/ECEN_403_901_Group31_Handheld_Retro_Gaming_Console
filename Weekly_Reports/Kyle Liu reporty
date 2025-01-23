@@ -6,32 +6,13 @@ I made more research into NHD-7.0-800480FT-CTXL-T and I had deciede to use C++ f
 I began reasaerching into the graphics controller, FT800, the graphics
 - FT800 communicates with your microcontroller through SPI or I2C
 - example of intialization process:
-class FT800Controller {
-public:
-    void initialize() {
-        sendCommand(FT800_ACTIVE);  // Wake up the FT800
-        delay(20);  // Wait for power up
-
-        // Set display parameters
-        sendCommand(FT800_CLEAR_COLOR_RGB(0, 0, 0));  // Set black background
-        sendCommand(FT800_CLEAR(1, 1, 1));  // Clear color, stencil, and tag buffers
-        sendCommand(FT800_DISPLAY());  // Enable display
-    }
-
-    void sendCommand(uint32_t command) {
-        // Implement SPI or I2C communication to send commands to FT800
-        SPI_Transfer(command);
-    }
-
-    void delay(int ms) {
-        // Implement a delay function to wait for FT800 to initialize
-        std::this_thread::sleep_for(std::chrono::milliseconds(ms));
-    }
-};
 
 Currently:
 purchasing graphics controller and display system.
 learning how to code a graphics controller(ft800)
 
+1/23/2025
+created new driver code that clears a specfic area of the display, increaing refresh rate of the display.
 
 
+w
